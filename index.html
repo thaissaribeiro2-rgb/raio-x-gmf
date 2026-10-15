@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raio-X GMF · IDECAN</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+html{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: faixa-distintivo azul-marinho no topo, navegação fixa por seções, blocos em grade que viram coluna única no celular */
+:root{
+  --bg:#f8f3f2; --surface:#ffffff; --ink:#2a1216; --muted:#6e5a5d; --line:#ecdfdf;
+  --navy:#5c1220; --navy-2:#7a1e2e; --gold:#d99a1b; --gold-soft:#fff3d6;
+  --teal:#11807a; --teal-soft:#dff3f1; --red:#d0452f; --red-soft:#fce8e2; --violet:#5b4bb5; --violet-soft:#ebe8fa;
+  --on-navy:#fff6f2;
+  --f-display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#170b0e; --surface:#24131a; --ink:#f3e9ea; --muted:#b8a3a6; --line:#40252c;
+  --navy:#3d0c16; --navy-2:#5e1626; --gold:#f2b93b; --gold-soft:#3a2f12;
+  --teal:#3cc2b8; --teal-soft:#0f3331; --red:#ff8a73; --red-soft:#3d1c18; --violet:#a597f5; --violet-soft:#25204a;
+  --on-navy:#fff6f2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#170b0e; --surface:#24131a; --ink:#f3e9ea; --muted:#b8a3a6; --line:#40252c;
+  --navy:#3d0c16; --navy-2:#5e1626; --gold:#f2b93b; --gold-soft:#3a2f12;
+  --teal:#3cc2b8; --teal-soft:#0f3331; --red:#ff8a73; --red-soft:#3d1c18; --violet:#a597f5; --violet-soft:#25204a;
+  --on-navy:#fff6f2; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.05;margin:0}
+h2{font-size:clamp(2rem,4.5vw,2.8rem);font-weight:900;text-transform:uppercase;letter-spacing:.01em}
+h3{font-size:1.35rem;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+/* HERO */
+.hero{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+ repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.035) 22px 23px);pointer-events:none}
+.hero .wrap{padding-block:48px 40px;position:relative;display:grid;grid-template-columns:1.8fr 1fr;gap:32px;align-items:center}
+.hero h1{margin-block:22px;font-size:clamp(3.2rem,9vw,5.6rem);font-weight:900;text-transform:uppercase;letter-spacing:-.005em}
+.hero h1 span{color:var(--gold)}
+.hero .eyebrow,.hero h1{text-align:center}
+.hero .lead{margin-top:0;text-align:justify;max-width:52ch;color:#ecd3d6;font-size:1.05rem}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+.tag{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:.8rem;font-weight:600}
+.badge{justify-self:center;width:min(100%,300px);aspect-ratio:1/1.12;position:relative}
+.badge svg{width:100%;height:100%;display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.14);border-top:1px solid rgba(255,255,255,.14)}
+.stat{background:#9e3647;padding:18px 16px;text-align:left}
+.stat b{display:block;font-family:var(--f-display);font-size:2.3rem;font-weight:900;color:var(--gold);line-height:1}
+.stat small{color:#ecd3d6;font-size:.82rem}
+
+/* NAV */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+nav.tabs a{flex:none;text-decoration:none;color:var(--muted);font-weight:600;font-size:.85rem;padding:6px 12px;border-radius:999px;border:1px solid transparent}
+nav.tabs a:hover,nav.tabs a.on{color:var(--ink);border-color:var(--line);background:var(--surface)}
+nav.tabs a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+section{padding-block:56px 8px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px;border-bottom:3px solid var(--ink);padding-bottom:12px}
+@media (min-width:821px){.sec-head p.one-line{max-width:none;white-space:nowrap}}
+.sec-head>div:first-child{display:flex;align-items:center;gap:14px}
+.sec-head .num{font-family:var(--f-display);font-size:3.2rem;font-weight:900;color:var(--gold);line-height:.8}
+.sec-head p{text-align:justify;color:var(--muted);max-width:46ch;font-size:.95rem}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid2>*,.grid3>*{min-width:0}
+
+/* distribuição da prova */
+.dist{display:grid;gap:8px}
+.dist-row{display:grid;grid-template-columns:200px 1fr 34px;gap:10px;align-items:center;font-size:.9rem}
+.bar{height:14px;background:var(--bg);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--navy-2);border-radius:4px}
+.dist-row.hl .bar i{background:var(--gold)}
+.dist-row.hl{font-weight:700}
+.note{margin-top:14px;font-size:.88rem;color:var(--muted)}
+.callout{text-align:justify;background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:10px;padding:14px 16px;font-size:.95rem}
+.callout b{color:var(--ink)}
+
+/* edital */
+.laws{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.law{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.law .dot{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.8rem;margin-top:2px}
+.law.hit .dot{background:var(--teal);color:#fff}
+.law.miss .dot{background:var(--bg);color:var(--muted);border:1px dashed var(--muted)}
+.law b{display:block;font-size:.95rem;line-height:1.3}
+.law small{color:var(--muted);font-size:.8rem}
+.law.miss b{color:var(--muted)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-bottom:14px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.sw{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+/* questões */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{font:inherit;font-size:.85rem;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.qs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.q-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.qn{font-family:var(--f-display);font-size:2rem;font-weight:900;line-height:1}
+.pill{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px}
+.p-guarda{background:var(--violet-soft);color:var(--violet)}
+.p-muni{background:var(--teal-soft);color:var(--teal)}
+.p-penal{background:var(--red-soft);color:var(--red)}
+.p-ctb{background:var(--gold-soft);color:#9a6a00}
+:root[data-theme="dark"] .p-ctb{color:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .p-ctb{color:var(--gold)}}
+.q h4{margin:0;font-size:1rem;line-height:1.35}
+.fmt{display:flex;flex-wrap:wrap;gap:6px}
+.fmt span{font-size:.75rem;border:1px solid var(--line);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.reveal{font:inherit;font-weight:700;font-size:.85rem;align-self:flex-start;background:none;border:2px solid var(--ink);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.ans{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.92rem}
+.ans .g{font-family:var(--f-display);font-size:1.6rem;font-weight:900;color:var(--teal);margin-right:8px;vertical-align:-3px}
+.all-btn{margin-left:auto}
+
+/* estatística */
+.hbars{display:grid;gap:12px}
+.hb{display:grid;grid-template-columns:150px 1fr 52px;gap:10px;align-items:center;font-size:.9rem}
+.hb .bar{height:22px;border-radius:6px}
+.hb .bar i{border-radius:6px}
+.hb .v{font-family:var(--f-mono);font-weight:700;text-align:right}
+.donut-box{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--teal) 0 54.5%, var(--line) 54.5% 100%);display:grid;place-items:center;flex:none}
+.donut div{width:104px;height:104px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
+.donut b{font-family:var(--f-display);font-size:2.2rem;font-weight:900;line-height:1}
+.donut small{font-size:.72rem;color:var(--muted)}
+.meters{display:grid;gap:14px}
+.meter-label{display:flex;justify-content:space-between;font-size:.9rem;font-weight:600;margin-bottom:4px}
+.meter{height:12px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--navy-2),var(--gold))}
+.zero{color:var(--red);font-weight:800}
+
+/* pegadinhas */
+.traps{display:grid;gap:16px}
+.trap{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.trap header{background:var(--navy);color:var(--on-navy);padding:12px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.trap header .t{font-family:var(--f-display);font-weight:800;font-size:1.25rem;text-transform:uppercase}
+.trap header small{color:#ecd3d6;font-size:.82rem}
+.swaps{padding:16px 18px;display:grid;gap:24px}
+.swap{display:grid;grid-template-columns:1fr 24px 1fr;gap:0;align-items:stretch}
+.swap>div{border-radius:10px;padding:10px 12px;font-size:.9rem;min-width:0}
+.ok{background:var(--teal-soft);border:1px solid color-mix(in srgb,var(--teal) 40%,transparent)}
+.bad{background:var(--red-soft);border:1px solid color-mix(in srgb,var(--red) 40%,transparent)}
+.ok .lab{color:var(--teal)} .bad .lab{color:var(--red)}
+.lab{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.arrow{display:grid;place-items:center;font-weight:900;color:var(--muted)}
+mark{background:none;color:inherit;font-weight:800;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.ok mark{text-decoration-color:var(--teal)} .bad mark{text-decoration-color:var(--red)}
+.trap-body{padding:16px 18px;font-size:.95rem;display:grid;gap:8px}
+.swaps+.trap-body{padding-top:8px}
+.inv{display:grid;justify-items:start;gap:8px}
+.inv span{font-family:var(--f-mono);font-size:.82rem;background:var(--red-soft);color:var(--red);padding:4px 10px;border-radius:6px;text-decoration:line-through;text-decoration-thickness:1px}
+
+/* outras provas */
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:10px}
+.exam .meta{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.exam ul{margin:0;padding-left:18px;font-size:.92rem}
+.quote-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.qr{border-top:3px solid var(--gold);padding-top:10px;font-size:.92rem}
+.qr b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+
+/* perfil */
+.profile{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.pf{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:10px}
+.pf-q{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pf-a{font-family:var(--f-display);font-size:1.7rem;font-weight:900;text-transform:uppercase;line-height:1}
+.lvl{display:flex;gap:4px}
+.lvl i{flex:1;height:8px;border-radius:3px;background:var(--line)}
+.lvl i.f{background:var(--gold)}
+.pf p{font-size:.92rem;color:var(--muted)}
+
+/* plano */
+.steps{display:grid;gap:12px;counter-reset:s}
+.step{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.step .n{font-family:var(--f-display);font-weight:900;font-size:2.6rem;color:var(--gold);line-height:.9}
+.step h3{font-size:1.15rem;margin-bottom:4px}
+.step p,.step li{font-size:.93rem}
+.step ul{margin:6px 0 0;padding-left:18px}
+.sub{margin:8px 0 14px;font-size:1.3rem;color:var(--navy-2)}
+.steps+.sub{margin-top:32px}
+.step-top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:6px}
+.step-top h3{margin:0}
+.step ul li{margin-bottom:4px}
+.prio-a{background:var(--red-soft);color:var(--red)}
+.prio-b{background:var(--gold-soft);color:var(--ink)}
+.prio-c{background:var(--teal-soft);color:var(--teal)}
+.method{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tip{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:8px;align-content:start;min-width:0}
+.tip-n{width:34px;height:34px;border-radius:50%;background:var(--navy-2);color:var(--on-navy);display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:1.1rem}
+.tip h4{margin:0;font-size:1.02rem}
+.tip p{font-size:.92rem;color:var(--muted);text-align:justify}
+.goal{margin-top:18px;background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:10px;padding:14px 16px;display:grid;gap:4px;font-size:.95rem}
+@media (max-width:820px){.method{grid-template-columns:1fr}}
+.warn p{text-align:justify}
+.warn{margin-top:18px;background:var(--navy);color:var(--on-navy);border-radius:14px;padding:20px;display:grid;gap:6px}
+.warn b{font-family:var(--f-display);font-size:1.3rem;text-transform:uppercase;color:var(--gold)}
+
+footer{padding-block:48px;color:var(--muted);font-size:.82rem}
+footer a{color:inherit}
+footer ul{padding-left:18px;margin:8px 0 0}
+
+@media (max-width:820px){
+ .hero .wrap{grid-template-columns:1fr}
+ .badge{display:none}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .grid2,.grid3,.qs,.profile,.quote-row{grid-template-columns:1fr}
+ .dist-row{grid-template-columns:130px 1fr 28px;font-size:.82rem}
+ .hb{grid-template-columns:110px 1fr 46px;font-size:.82rem}
+ .swap{grid-template-columns:1fr}
+ .arrow{transform:rotate(90deg);height:24px}
+}
+@media (prefers-reduced-motion:no-preference){
+ .bar i,.meter i{animation:grow .9s ease-out both}
+ @keyframes grow{from{transform:scaleX(.15);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Legislação Extravagante · Guarda Municipal de Fortaleza</div>
+      <h1>Raio-X <span>GMF 2023</span></h1>
+      <p class="lead">Uma análise completa da última prova da Guarda Municipal de Fortaleza com foco em Legislação Extravagante e na banca IDECAN.</p>
+      <div class="tags"><span class="tag">Banca IDECAN</span><span class="tag">80 questões</span><span class="tag">4 alternativas</span><span class="tag">Nível médio</span></div>
+    </div>
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="0 0 300 336">
+        <path d="M150 8 L276 52 V160 C276 240 220 300 150 328 C80 300 24 240 24 160 V52 Z" fill="#7a1e2e" stroke="#e0a21a" stroke-width="6"/>
+        <path d="M150 34 L252 70 V160 C252 226 206 278 150 302 C94 278 48 226 48 160 V70 Z" fill="none" stroke="#e0a21a" stroke-width="2" stroke-dasharray="4 6"/>
+        <text x="150" y="128" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="30" fill="#fff6f2" letter-spacing="2">LEGISLAÇÃO</text>
+        <text x="150" y="160" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="30" fill="#fff6f2" letter-spacing="2">EXTRAVAGANTE</text>
+        <text x="150" y="226" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="66" fill="#e0a21a">10</text>
+        <text x="150" y="252" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="700" font-size="14" fill="#ecd3d6" letter-spacing="3">QUESTÕES · 15 PONTOS</text>
+      </svg>
+    </div>
+  </div>
+  <div class="stats wrap" style="padding:0">
+    <div class="stat"><b>80</b><small>questões na prova objetiva</small></div>
+    <div class="stat"><b>1.000</b><small>vagas, salário de R$ 3.152,78</small></div>
+    <div class="stat"><b>1,5</b><small>ponto por questão de legislação extravagante</small></div>
+    <div class="stat"><b>62 mil</b><small>candidatos previstos</small></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="wrap">
+    <a href="#prova">A prova</a><a href="#edital">Edital</a><a href="#caiu">O que caiu</a><a href="#numeros">Estatística</a><a href="#pegadinhas">Pegadinhas</a><a href="#outras">Outras provas</a><a href="#perfil">Perfil da banca</a><a href="#plano">Plano de estudo</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="prova">
+  <div class="sec-head"><div><div class="num">01</div><h2>A prova de 2023</h2></div><p>Como as 80 questões foram distribuídas entre as disciplinas.</p></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3 style="margin-bottom:16px">Questões por disciplina</h3>
+      <div class="dist">
+        <div class="dist-row"><span>Língua Portuguesa</span><div class="bar"><i style="width:100%"></i></div><span class="mono">10</span></div>
+        <div class="dist-row"><span>Dir. Administrativo</span><div class="bar"><i style="width:100%"></i></div><span class="mono">10</span></div>
+        <div class="dist-row"><span>Constitucional e DH</span><div class="bar"><i style="width:100%"></i></div><span class="mono">10</span></div>
+        <div class="dist-row"><span>Penal e Processo Penal</span><div class="bar"><i style="width:100%"></i></div><span class="mono">10</span></div>
+        <div class="dist-row hl"><span>Legislação Extravagante</span><div class="bar"><i style="width:100%"></i></div><span class="mono">10</span></div>
+        <div class="dist-row"><span>Raciocínio Lógico</span><div class="bar"><i style="width:90%"></i></div><span class="mono">9</span></div>
+        <div class="dist-row"><span>Informática</span><div class="bar"><i style="width:70%"></i></div><span class="mono">7</span></div>
+        <div class="dist-row"><span>Atualidades</span><div class="bar"><i style="width:70%"></i></div><span class="mono">7</span></div>
+        <div class="dist-row"><span>Conhec. sobre Fortaleza</span><div class="bar"><i style="width:70%"></i></div><span class="mono">7</span></div>
+      </div>
+    </div>
+    <div style="display:grid;gap:18px;align-content:start">
+      <div class="panel">
+        <h3 style="margin-bottom:12px">Ficha técnica</h3>
+        <div style="display:grid;gap:8px;font-size:.93rem">
+          <div><b>Banca:</b> IDECAN</div>
+          <div><b>Formato:</b> 80 questões, 4 alternativas, 4 horas, 100 pontos</div>
+          <div><b>Vagas:</b> 750 ampla, 200 negros, 50 PcD</div>
+          <div><b>Etapas:</b> exame intelectual, médico e toxicológico, TAF, psicológica, investigação social, curso de formação</div>
+        </div>
+      </div>
+      <div class="callout"><b>Por que importa:</b> no quadro do edital, Legislação Extravagante valia 15 pontos em 10 questões. É o mesmo peso de Penal ou Constitucional, então essa matéria decide classificação.</div>
+    </div>
+  </div>
+</section>
+
+<section id="edital">
+  <div class="sec-head"><div><div class="num">02</div><h2>O edital de Legislação Extravagante</h2></div><p class="one-line">São 11 leis no edital. Apenas 6 caíram na prova.</p></div>
+  <div class="legend"><span><i class="sw" style="background:var(--teal)"></i>Caiu em 2023 (nº de questões)</span><span><i class="sw" style="border:1px dashed var(--muted)"></i>Não caiu</span></div>
+  <div class="laws">
+    <div class="law hit"><span class="dot">3</span><div><b>Estatuto Geral das Guardas</b><small>Lei 13.022/2014</small></div></div>
+    <div class="law hit"><span class="dot">2</span><div><b>Lei Orgânica de Fortaleza</b><small>Arts. 1º a 9º e 98 a 123</small></div></div>
+    <div class="law hit"><span class="dot">2</span><div><b>Estatuto dos Servidores de Fortaleza</b><small>Lei Municipal 6.794/1990</small></div></div>
+    <div class="law hit"><span class="dot">1</span><div><b>Abuso de Autoridade</b><small>Lei 13.869/2019</small></div></div>
+    <div class="law hit"><span class="dot">1</span><div><b>Estatuto do Desarmamento</b><small>Lei 10.826/2003</small></div></div>
+    <div class="law hit"><span class="dot">1</span><div><b>Código de Trânsito</b><small>Lei 9.503/1997</small></div></div>
+    <div class="law miss"><span class="dot">0</span><div><b>Lei de Drogas</b><small>Lei 11.343/2006 (o edital escreveu 2016 por erro)</small></div></div>
+    <div class="law miss"><span class="dot">0</span><div><b>Maria da Penha</b><small>Lei 11.340/2006</small></div></div>
+    <div class="law miss"><span class="dot">0</span><div><b>ECA</b><small>Lei 8.069/1990</small></div></div>
+    <div class="law miss"><span class="dot">0</span><div><b>Crimes de preconceito</b><small>Lei 7.716/1989</small></div></div>
+    <div class="law miss"><span class="dot">0</span><div><b>Crimes Ambientais</b><small>Lei 9.605/1998</small></div></div>
+  </div>
+</section>
+
+<section id="caiu">
+  <div class="sec-head"><div><div class="num">03</div><h2>O que caiu, questão por questão</h2></div><p>Questões 71 a 80.</p></div>
+  <div class="filters" role="group" aria-label="Filtrar por lei">
+    <button class="chip" data-f="all" aria-pressed="true">Todas</button>
+    <button class="chip" data-f="guarda" aria-pressed="false">Estatuto das Guardas</button>
+    <button class="chip" data-f="muni" aria-pressed="false">Leis de Fortaleza</button>
+    <button class="chip" data-f="penal" aria-pressed="false">Penal especial</button>
+    <button class="chip" data-f="ctb" aria-pressed="false">Trânsito</button>
+    <button class="chip all-btn" id="openAll" aria-pressed="false">Mostrar todos os gabaritos</button>
+  </div>
+  <div class="qs" id="qs"></div>
+</section>
+
+<section id="numeros">
+  <div class="sec-head"><div><div class="num">04</div><h2>Estatística da prova</h2></div><p>Leis com suas respectivas cobranças.</p></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3 style="margin-bottom:16px">Peso por lei</h3>
+      <div class="hbars">
+        <div class="hb"><span>Leis de Fortaleza</span><div class="bar"><i style="width:100%;background:var(--teal)"></i></div><span class="v">40%</span></div>
+        <div class="hb"><span>Estatuto das Guardas</span><div class="bar"><i style="width:75%;background:var(--violet)"></i></div><span class="v">30%</span></div>
+        <div class="hb"><span>Abuso de Autoridade</span><div class="bar"><i style="width:25%;background:var(--red)"></i></div><span class="v">10%</span></div>
+        <div class="hb"><span>Desarmamento</span><div class="bar"><i style="width:25%;background:var(--red)"></i></div><span class="v">10%</span></div>
+        <div class="hb"><span>CTB</span><div class="bar"><i style="width:25%;background:var(--gold)"></i></div><span class="v">10%</span></div>
+      </div>
+      <p class="note">As leis "da casa" (Estatuto das Guardas e legislação municipal) somaram <b>70%</b> do bloco.</p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:16px">Cobertura do edital</h3>
+      <div class="donut-box">
+        <div class="donut"><div><span><b>6</b><br><small>de 11 leis</small></span></div></div>
+        <div style="flex:1;min-width:180px;font-size:.93rem;display:grid;gap:8px">
+          <p><b>55%</b> das leis do edital caíram.</p>
+          <p><b>45%</b> ficaram de fora: Drogas, Maria da Penha, ECA, Lei 7.716 e Crimes Ambientais.</p>
+          <p style="color:var(--muted)">Essas cinco caem em outras guardas do IDECAN e têm boa chance de voltar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <h3 style="margin-bottom:16px">Como a banca cobrou</h3>
+    <div class="meters">
+      <div><div class="meter-label"><span>Letra de lei pura</span><span class="mono">70%</span></div><div class="meter"><i style="width:70%"></i></div></div>
+      <div><div class="meter-label"><span>Número, prazo ou percentual como núcleo da questão</span><span class="mono">50%</span></div><div class="meter"><i style="width:50%"></i></div></div>
+      <div><div class="meter-label"><span>Caso hipotético curto, com personagem</span><span class="mono">30%</span></div><div class="meter"><i style="width:30%"></i></div></div>
+      <div><div class="meter-label"><span>Alternativas com palavras trocadas da lei</span><span class="mono">30%</span></div><div class="meter"><i style="width:30%"></i></div></div>
+      <div><div class="meter-label"><span>Itens I, II, III, IV</span><span class="mono">10%</span></div><div class="meter"><i style="width:10%"></i></div></div>
+      <div><div class="meter-label"><span>Comando negativo ("única que não")</span><span class="mono">10%</span></div><div class="meter"><i style="width:10%"></i></div></div>
+      <div><div class="meter-label"><span>Súmula, jurisprudência ou doutrina</span><span class="mono zero">0%</span></div><div class="meter"><i style="width:0"></i></div></div>
+    </div>
+    <p class="note">As categorias se sobrepõem: uma mesma questão pode ser literal e cobrar número ao mesmo tempo.</p>
+  </div>
+</section>
+
+<section id="pegadinhas">
+  <div class="sec-head"><div><div class="num">05</div><h2>Pegadinhas reais da prova</h2></div><p>O que a lei diz em verde e o que a banca escreveu em vermelho.</p></div>
+  <div class="traps">
+    <article class="trap">
+      <header><span class="t">Troca cirúrgica de palavras</span><small>Questão 74 · Estatuto das Guardas, art. 5º</small></header>
+      <div class="swaps">
+        <div class="swap"><div class="ok"><span class="lab">Lei</span>Encaminhar ao <mark>delegado de polícia</mark>, diante de flagrante delito, o autor da infração</div><div class="arrow">→</div><div class="bad"><span class="lab">Prova</span>Encaminhar ao <mark>Ministério Público</mark>, diante de flagrante delito…</div></div>
+        <div class="swap"><div class="ok"><span class="lab">Lei</span>Auxiliar na segurança de <mark>grandes eventos</mark> e na proteção de <mark>autoridades e dignitários</mark></div><div class="arrow">→</div><div class="bad"><span class="lab">Prova</span>Auxiliar na segurança de eventos <mark>de qualquer porte</mark> e na proteção dos <mark>servidores públicos</mark></div></div>
+        <div class="swap"><div class="ok"><span class="lab">Lei</span>Proteger o patrimônio ecológico, histórico, cultural…, <mark>inclusive</mark> adotando medidas educativas</div><div class="arrow">→</div><div class="bad"><span class="lab">Prova</span>Proteger o patrimônio…, <mark>exceto</mark> quanto à adoção de medidas educativas</div></div>
+      </div>
+    </article>
+    <article class="trap">
+      <header><span class="t">Número diferente do extenso</span><small>Questão 71 · Estatuto das Guardas, art. 7º</small></header>
+      <div class="swaps">
+        <div class="swap"><div class="ok"><span class="lab">Lei</span>Até <mark>0,4%</mark> da população em municípios com até 50 mil habitantes; 0,3% entre 50 mil e 500 mil; 0,2% acima de 500 mil</div><div class="arrow">→</div><div class="bad"><span class="lab">Prova</span>"<mark>0,5% (dois décimos por cento)</mark>" para municípios com mais de <mark>750 mil</mark> habitantes</div></div>
+      </div>
+      <div class="trap-body"><p>Duas armadilhas no mesmo item: o algarismo não bate com o extenso, e a faixa de 750 mil habitantes não existe na lei. Leia o número <b>e</b> o extenso.</p></div>
+    </article>
+    <article class="trap">
+      <header><span class="t">Detalhe escondido no caso</span><small>Questão 78 · CTB</small></header>
+      <div class="trap-body">
+        <p>O enunciado diz que a viatura fazia um deslocamento <b>não emergencial</b>. A expressão existe para tirar do guarda as prerrogativas de veículo em emergência. A partir daí, aplica-se a regra comum: farol desregulado gera <b>retenção do veículo para regularização</b>.</p>
+        <p>A alternativa "infração leve" era a armadilha, porque a infração é grave.</p>
+      </div>
+    </article>
+    <article class="trap">
+      <header><span class="t">Termos inventados</span><small>Bloco de Penal da mesma prova · padrão da banca</small></header>
+      <div class="trap-body">
+        <p>As alternativas erradas ganharam expressões que soam técnicas, mas não existem na lei:</p>
+        <div class="inv"><span>resultado temperado</span><span>tipicidade derivada</span><span>causalidade adequada sintética</span><span>crime impossível previsível</span><span>pena diminuída típica</span></div>
+        <p><b>Regra prática:</b> se a expressão parece "chique" e você nunca a viu na lei, a alternativa provavelmente está errada.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="outras">
+  <div class="sec-head"><div><div class="num">06</div><h2>O IDECAN em outras provas</h2></div><p>As leis que não caíram em Fortaleza apareceram em outras guardas da mesma banca.</p></div>
+  <div class="grid2">
+    <div class="exam">
+      <div class="meta">GCM MARACANAÚ/CE · 2023 · 60 QUESTÕES</div>
+      <h3>Maracanaú</h3>
+      <ul><li>3 questões do Estatuto Geral das Guardas</li><li>Legislação Penal Especial entre os assuntos mais relevantes (6%)</li><li>ECA: crimes e infrações administrativas</li><li>Crimes ambientais: responsabilidade ambiental</li><li>Lei Maria da Penha</li></ul>
+    </div>
+    <div class="exam">
+      <div class="meta">GCM JOÃO PESSOA/PB · 2024 · 50 QUESTÕES</div>
+      <h3>João Pessoa</h3>
+      <ul><li>5 questões de Legislação de Trânsito, com resoluções do CONTRAN e Sistema Nacional de Trânsito</li><li>Legislação Penal Especial</li><li>Lei Maria da Penha</li><li>Crimes contra a administração pública</li></ul>
+    </div>
+  </div>
+  <div class="quote-row">
+    <div class="qr"><b>Polícia Penal CE</b>Análise aponta narrativas hipotéticas, leitura literal da lei e pouca jurisprudência nas provas policiais da banca.</div>
+    <div class="qr"><b>Visão geral</b>Professores lembram que o IDECAN não tem estilo único e pode alternar lei seca com doutrina e jurisprudência.</div>
+    <div class="qr"><b>Para guarda</b>Em nível médio, o padrão é claramente lei seca. Na GMF 2023, nenhuma questão de jurisprudência.</div>
+  </div>
+</section>
+
+<section id="perfil">
+  <div class="sec-head"><div><div class="num">07</div><h2>Perfil completo da banca</h2></div><p>A barra mostra a intensidade de cada item.</p></div>
+  <div class="profile" id="profile"></div>
+</section>
+
+<section id="plano">
+  <div class="sec-head"><div><div class="num">08</div><h2>Plano para estudar pro próximo concurso</h2></div><p>Onde focar em Legislação Extravagante.</p></div>
+
+  <h3 class="sub">No que focar, em ordem de prioridade</h3>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div><div class="step-top"><h3>Estatuto Geral das Guardas</h3><span class="pill prio-a">Prioridade máxima</span></div><p>Foi o campeão do bloco, com 3 de 10 questões. Leia a lei inteira, várias vezes, até reconhecer cada palavra.</p><ul><li><b>Competências (art. 5º):</b> decore as palavras-chave de cada inciso: "delegado de polícia", "grandes eventos", "autoridades e dignitários", "inclusive medidas educativas"</li><li><b>Efetivo máximo (art. 7º):</b> 0,4% até 50 mil habitantes; 0,3% de 50 mil a 500 mil; 0,2% acima de 500 mil</li><li><b>Linha 153 e frequência de rádio exclusiva (art. 17)</b></li><li><b>Princípios, requisitos de investidura, controle (corregedoria e ouvidoria) e porte de arma</b></li></ul></div></div>
+    <div class="step"><span class="n">2</span><div><div class="step-top"><h3>Leis de Fortaleza</h3><span class="pill prio-a">Prioridade máxima</span></div><p>A Lei Orgânica e o Estatuto dos Servidores somaram 4 das 10 questões. Pouca gente estuda essas leis, então quem estuda sai na frente.</p><ul><li><b>Lei Orgânica:</b> estude exatamente o recorte do edital (em 2023, arts. 1º a 9º e 98 a 123). Símbolos oficiais e gestão democrática já caíram</li><li><b>Estatuto dos Servidores:</b> férias, licenças, prazos e situações práticas, porque a banca monta casos com servidores fictícios</li></ul></div></div>
+    <div class="step"><span class="n">3</span><div><div class="step-top"><h3>Penal especial com foco em números</h3><span class="pill prio-b">Prioridade alta</span></div><p>Abuso de Autoridade e Estatuto do Desarmamento caíram em 2023. As demais aparecem em outras guardas do IDECAN.</p><ul><li><b>Abuso de Autoridade:</b> efeitos da condenação (art. 4º) e prazos, como a inabilitação de 1 a 5 anos para o reincidente</li><li><b>Estatuto do Desarmamento:</b> rol de quem tem porte (art. 6º) e a diferença entre posse e porte</li><li><b>Drogas:</b> diferença entre usuário (art. 28) e tráfico (art. 33) e as penas</li><li><b>Maria da Penha:</b> formas de violência (art. 7º), medidas protetivas e o crime de descumprimento</li><li><b>ECA, Lei 7.716 e Crimes Ambientais:</b> leitura da lei seca e dos crimes, com atenção às mudanças da Lei 14.532/2023 na Lei 7.716</li></ul></div></div>
+    <div class="step"><span class="n">4</span><div><div class="step-top"><h3>Código de Trânsito</h3><span class="pill prio-c">Prioridade média</span></div><p>Caiu uma questão em Fortaleza e cinco em João Pessoa. O foco é o dia a dia da viatura.</p><ul><li>Natureza das infrações (leve, média, grave e gravíssima) e as medidas administrativas</li><li>Regras de veículos em serviço de emergência e o que muda quando o deslocamento não é emergencial</li><li>Competências do município e dos agentes de trânsito</li></ul></div></div>
+  </div>
+
+  <div class="warn"><b>Atenção: a banca de 2027 ainda não foi definida</b><p>A comissão está formada e o prefeito reafirmou em agosto de 2026 a intenção de lançar o concurso até o fim da gestão. Se outra banca for escolhida, o conteúdo do edital deve se repetir em grande parte.</p></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Fontes</b>
+    <ul>
+      <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2023-prefeitura-de-fortaleza-ce-guarda-municipal" target="_blank" rel="noopener">QConcursos · Prova GMF 2023 e gabaritos</a></li>
+      <li><a href="https://www.direcaoconcursos.com.br/noticias/concurso-guarda-de-fortaleza-o-que-estudar" target="_blank" rel="noopener">Direção Concursos · Conteúdo do edital</a></li>
+      <li><a href="https://www.fortaleza.ce.gov.br/images/0001/27_03_2023_GMF.pdf" target="_blank" rel="noopener">Edital GMF 2023 · Prefeitura de Fortaleza</a></li>
+      <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2023-prefeitura-de-maracanau-ce-guarda-civil-municipal" target="_blank" rel="noopener">QConcursos · GCM Maracanaú 2023</a></li>
+      <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2024-prefeitura-de-joao-pessoa-pb-guarda-civil-municipal" target="_blank" rel="noopener">QConcursos · GCM João Pessoa 2024</a></li>
+      <li><a href="https://www.novaconcursos.com.br/portal/concursos/concurso-guarda-de-fortaleza-ce/" target="_blank" rel="noopener">Nova Concursos · Próximo concurso GMF</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+const Q=[
+ {n:71,k:"guarda",lei:"Estatuto das Guardas",t:"Limite de efetivo das guardas conforme a população do município",f:["Itens I a IV","Percentuais"],g:"A",a:"Só o item I estava certo: até 0,4% da população em municípios com até 50 mil habitantes. Os demais trocavam faixas e percentuais."},
+ {n:72,k:"guarda",lei:"Estatuto das Guardas",t:"Número da linha telefônica que a Anatel destina às guardas",f:["Literal","Número"],g:"D",a:"153. A lei também garante faixa exclusiva de frequência de rádio aos municípios que possuam guarda."},
+ {n:73,k:"muni",lei:"LOM Fortaleza",t:"Instrumentos de gestão democrática da cidade",f:["Literal"],g:"C",a:"Debates, audiências e consultas públicas."},
+ {n:74,k:"guarda",lei:"Estatuto das Guardas",t:"Competências específicas das guardas municipais",f:["Literal","Palavras trocadas"],g:"A",a:"Atuar com ações preventivas na segurança escolar, zelando pelo entorno e colaborando com a cultura de paz. As outras alternativas trocavam palavras do art. 5º."},
+ {n:75,k:"penal",lei:"Abuso de Autoridade",t:"Prazo de inabilitação para cargo público do agente reincidente",f:["Prazo"],g:"B",a:"De 1 a 5 anos, e só quando houver reincidência."},
+ {n:76,k:"penal",lei:"Estatuto do Desarmamento",t:"Quem tem porte: guarda, analista tributário da RFB, agente do GSI e procurador-geral do município",f:["Caso com personagens"],g:"A",a:"O procurador-geral do município (João) não tem porte. Guarda, analista tributário da Receita e agente do GSI estão no rol do art. 6º."},
+ {n:77,k:"muni",lei:"LOM Fortaleza",t:"Qual item não é símbolo oficial do município",f:["Comando negativo"],g:"B",a:"A moeda. Bandeira, hino e brasão são símbolos oficiais."},
+ {n:78,k:"ctb",lei:"CTB",t:"Viatura com farol desregulado em deslocamento não emergencial",f:["Caso prático"],g:"C",a:"Retenção do veículo para regularização. A infração é grave, não leve."},
+ {n:79,k:"muni",lei:"Estatuto dos Servidores",t:"Férias proporcionais na exoneração de servidora com 3 anos e 6 meses",f:["Caso prático","Proporção"],g:"C",a:"Ela recebe a remuneração do período incompleto na proporção de 1/12 por mês de serviço."},
+ {n:80,k:"muni",lei:"Estatuto dos Servidores",t:"Licença para acompanhar cônjuge mandado servir no exterior",f:["Prazo"],g:"D",a:"Vale pelo tempo que durar a comissão ou nova função do cônjuge, sem limite de prazo."}
+];
+const pillCls={guarda:"p-guarda",muni:"p-muni",penal:"p-penal",ctb:"p-ctb"};
+const box=document.getElementById("qs");
+box.innerHTML=Q.map(q=>`<article class="q" data-k="${q.k}">
+ <div class="q-top"><span class="qn">${q.n}</span><span class="pill ${pillCls[q.k]}">${q.lei}</span></div>
+ <h4>${q.t}</h4>
+ <div class="fmt">${q.f.map(x=>`<span>${x}</span>`).join("")}</div>
+ <button class="reveal" id="rv${q.n}" aria-expanded="false">Ver gabarito</button>
+ <div class="ans" hidden><span class="g">${q.g}</span>${q.a}</div>
+</article>`).join("");
+function toggle(card,open){const b=card.querySelector(".reveal"),a=card.querySelector(".ans");a.hidden=!open;b.setAttribute("aria-expanded",open);b.textContent=open?"Esconder gabarito":"Ver gabarito";}
+box.addEventListener("click",e=>{const b=e.target.closest(".reveal");if(!b)return;const c=b.closest(".q");toggle(c,c.querySelector(".ans").hidden);});
+document.querySelectorAll(".chip[data-f]").forEach(ch=>ch.addEventListener("click",()=>{
+ document.querySelectorAll(".chip[data-f]").forEach(c=>c.setAttribute("aria-pressed",c===ch));
+ const f=ch.dataset.f;box.querySelectorAll(".q").forEach(c=>c.hidden=!(f==="all"||c.dataset.k===f));
+}));
+const allBtn=document.getElementById("openAll");
+allBtn.addEventListener("click",()=>{const open=allBtn.getAttribute("aria-pressed")!=="true";allBtn.setAttribute("aria-pressed",open);allBtn.textContent=open?"Esconder todos":"Mostrar todos os gabaritos";box.querySelectorAll(".q").forEach(c=>toggle(c,open));});
+
+const P=[
+ {q:"Lei ou teoria?",a:"Lei seca",l:5,d:"Quase 100% letra de lei. Nenhuma questão doutrinária em 2023."},
+ {q:"Gosta de súmulas e jurisprudência?",a:"Pouco",l:1,d:"Zero na GMF 2023. Pode aparecer em provas policiais de nível superior, mas não é o forte em guarda."},
+ {q:"Contextualiza?",a:"Moderadamente",l:3,d:"Cerca de 30%. Casos curtos com nomes, e a resposta continua sendo um artigo de lei."},
+ {q:"Cobra datas, prazos e números?",a:"Muito",l:4,d:"Metade do bloco: percentuais, telefone 153, prazos de inabilitação, proporção de férias, limite de licença."},
+ {q:"Troca palavras?",a:"Sim, é a principal",l:5,d:"Troca o destinatário (delegado por MP), inverte inclusive e exceto, amplia o alcance (grandes eventos por qualquer porte)."},
+ {q:"Outras pegadinhas",a:"Variadas",l:3,d:"Número diferente do extenso, faixas inventadas, comando negativo e termos técnicos inventados."},
+ {q:"Peso das leis da casa",a:"Enorme",l:5,d:"Estatuto das Guardas e legislação municipal somaram 70% do bloco."},
+ {q:"Nível de dificuldade",a:"Fácil a médio",l:2,d:"Quem leu a lei com atenção acerta. Quem leu por cima cai na palavra trocada."}
+];
+document.getElementById("profile").innerHTML=P.map(p=>`<div class="pf"><div class="pf-q">${p.q}</div><div class="pf-a">${p.a}</div><div class="lvl" aria-label="Intensidade ${p.l} de 5">${[1,2,3,4,5].map(i=>`<i class="${i<=p.l?"f":""}"></i>`).join("")}</div><p>${p.d}</p></div>`).join("");
+
+const links=[...document.querySelectorAll("nav.tabs a")];
+const secs=links.map(a=>document.querySelector(a.getAttribute("href")));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle("on",l.getAttribute("href")==="#"+e.target.id));}}),{rootMargin:"-40% 0px -55% 0px"});
+secs.forEach(s=>s&&io.observe(s));
+</script>
+</body>
+</html>
