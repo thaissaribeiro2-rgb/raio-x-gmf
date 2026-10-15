@@ -43,11 +43,11 @@ p{margin:0}
 .hero{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:
  repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.035) 22px 23px);pointer-events:none}
-.hero .wrap{padding-block:48px 40px;position:relative;display:grid;grid-template-columns:1.8fr 1fr;gap:32px;align-items:center}
+.hero .wrap{padding-block:48px 40px;position:relative;display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
 .hero h1{margin-block:22px;font-size:clamp(3.2rem,9vw,5.6rem);font-weight:900;text-transform:uppercase;letter-spacing:-.005em}
 .hero h1 span{color:var(--gold)}
 .hero .eyebrow,.hero h1{text-align:center}
-.hero .lead{margin-top:0;text-align:justify;max-width:52ch;color:#ecd3d6;font-size:1.05rem}
+.hero .lead{margin:0 auto;text-align:justify;max-width:52ch;color:#ecd3d6;font-size:1.05rem}
 .tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
 .tag{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:.8rem;font-weight:600}
 .badge{justify-self:center;width:min(100%,300px);aspect-ratio:1/1.12;position:relative}
@@ -234,16 +234,6 @@ footer ul{padding-left:18px;margin:8px 0 0}
       <h1>Raio-X <span>GMF 2023</span></h1>
       <p class="lead">Uma análise completa da última prova da Guarda Municipal de Fortaleza com foco em Legislação Extravagante e na banca IDECAN.</p>
       <div class="tags"><span class="tag">Banca IDECAN</span><span class="tag">80 questões</span><span class="tag">4 alternativas</span><span class="tag">Nível médio</span></div>
-    </div>
-    <div class="badge" aria-hidden="true">
-      <svg viewBox="0 0 300 336">
-        <path d="M150 8 L276 52 V160 C276 240 220 300 150 328 C80 300 24 240 24 160 V52 Z" fill="#7a1e2e" stroke="#e0a21a" stroke-width="6"/>
-        <path d="M150 34 L252 70 V160 C252 226 206 278 150 302 C94 278 48 226 48 160 V70 Z" fill="none" stroke="#e0a21a" stroke-width="2" stroke-dasharray="4 6"/>
-        <text x="150" y="128" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="30" fill="#fff6f2" letter-spacing="2">LEGISLAÇÃO</text>
-        <text x="150" y="160" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="30" fill="#fff6f2" letter-spacing="2">EXTRAVAGANTE</text>
-        <text x="150" y="226" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="66" fill="#e0a21a">10</text>
-        <text x="150" y="252" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="700" font-size="14" fill="#ecd3d6" letter-spacing="3">QUESTÕES · 15 PONTOS</text>
-      </svg>
     </div>
   </div>
   <div class="stats wrap" style="padding:0">
