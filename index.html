@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Raio-X GMF · IDECAN</title>
+<title>Raio-X GMF 2023 · Dossiê Aprovação</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap">
 <style>
 html{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
 /* Layout: faixa-distintivo azul-marinho no topo, navegação fixa por seções, blocos em grade que viram coluna única no celular */
@@ -223,11 +223,88 @@ footer ul{padding-left:18px;margin:8px 0 0}
  .bar i,.meter i{animation:grow .9s ease-out both}
  @keyframes grow{from{transform:scaleX(.15);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
 }
+
+/* ===== Identidade visual Dossiê Aprovação: vinho, vinho-noite, dourado, pêssego, areia, creme ===== */
+:root{
+  --bg:#FBF4EC; --surface:#FFFCF8; --ink:#3B3B40; --muted:#64565D; --line:#E9D6C6;
+  --navy:#3A0D1D; --navy-2:#6B1A33; --gold:#C9A45C; --gold-soft:#F3D9C2;
+  --teal:#6B1A33; --teal-soft:#F3D9C2; --red:#A3292B; --red-soft:#F8E1DD; --violet:#3A0D1D; --violet-soft:#E9B48C;
+  --on-navy:#FBF4EC; --brand-ink:#6B1A33; --peach:#E9B48C;
+  --f-display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --f-body:"Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"Montserrat", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1F0A12; --surface:#2E0F1C; --ink:#F6EDE4; --muted:#CDB9BF; --line:#4A2131;
+  --navy:#3A0D1D; --navy-2:#8E2C4A; --gold:#C9A45C; --gold-soft:#43231A;
+  --teal:#E9B48C; --teal-soft:#4A2131; --red:#F0958F; --red-soft:#4A1C1E; --violet:#E9B48C; --violet-soft:#4A2131;
+  --brand-ink:#E9B48C}}
+:root[data-theme="dark"]{
+  --bg:#1F0A12; --surface:#2E0F1C; --ink:#F6EDE4; --muted:#CDB9BF; --line:#4A2131;
+  --navy:#3A0D1D; --navy-2:#8E2C4A; --gold:#C9A45C; --gold-soft:#43231A;
+  --teal:#E9B48C; --teal-soft:#4A2131; --red:#F0958F; --red-soft:#4A1C1E; --violet:#E9B48C; --violet-soft:#4A2131;
+  --brand-ink:#E9B48C}
+h1,h2,h3,.qn,.stat b,.sec-head .num,.pf-a,.step .n,.donut b,.ans .g,.tip-n,.trap header .t,.warn b{font-weight:700;text-transform:none;letter-spacing:0}
+h2{font-size:clamp(1.8rem,4vw,2.5rem)}
+h3{font-size:1.25rem}
+.mono,.hb .v{font-variant-numeric:tabular-nums;font-weight:600}
+.hero{border-bottom:1.5px solid var(--gold)}
+.hero::before{background:none;inset:12px;border:1px solid rgba(201,164,92,.35)}
+.hero h1{text-transform:none;font-size:clamp(2.8rem,8vw,5rem)}
+.hero h1 span{color:var(--peach)}
+.hero .brandbar{display:flex;align-items:center;justify-content:center;gap:12px;padding-block:32px 0;position:relative}
+.hero .brandbar+.wrap{padding-top:24px}
+.brandbar svg{width:40px;height:40px;flex:none}
+.brandbar .bn{font-family:var(--f-display);font-weight:700;font-size:1.15rem;color:var(--on-navy);line-height:1}
+.brandbar .bs{display:block;font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.28em;color:var(--gold);margin-top:5px}
+.tag{border-color:rgba(201,164,92,.55);border-radius:4px;color:var(--on-navy)}
+.stats{background:rgba(201,164,92,.35)}
+.hero .stats{grid-template-columns:repeat(4,1fr);gap:1px;padding-block:0;margin-top:8px;align-items:stretch}
+.hero .lead{text-align:center}
+@media (max-width:820px){.hero .stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#6B1A33}
+.stat b{color:var(--gold)}
+.sec-head{border-bottom:1.5px solid var(--brand-ink)}
+.sec-head .num,.step .n{color:var(--brand-ink)}
+.panel,.q,.trap,.exam,.pf,.tip,.step,.law{border-radius:12px}
+.chip,.pill,.reveal{border-radius:4px}
+.chip[aria-pressed="true"]{background:var(--navy-2);border-color:var(--navy-2);color:#FBF4EC}
+.reveal{border:1.5px solid var(--brand-ink);color:var(--brand-ink)}
+.law.hit .dot{background:var(--navy-2);color:#FBF4EC}
+.legend .sw[style*="--teal"]{background:var(--navy-2)!important}
+.p-ctb{background:var(--navy);color:var(--peach)}
+:root[data-theme="dark"] .p-ctb{color:var(--peach)}
+.dist-row.hl .bar i{background:var(--gold)}
+.bar i{background:var(--navy-2)}
+.hb:nth-child(1) .bar i{background:#6B1A33!important}
+.hb:nth-child(2) .bar i{background:#B4687E!important}
+.hb:nth-child(3) .bar i,.hb:nth-child(4) .bar i{background:#E9B48C!important}
+.hb:nth-child(5) .bar i{background:#C9A45C!important}
+.donut{background:conic-gradient(var(--navy-2) 0 54.5%, var(--line) 54.5% 100%)}
+.meter i{background:var(--navy-2)}
+.lvl i.f{background:var(--navy-2)}
+.ans .g{color:var(--brand-ink)}
+.callout,.goal{border-left:0;border-top:4px solid var(--navy-2);border-radius:4px;background:var(--gold-soft)}
+.ok{background:var(--gold-soft);border:1px solid var(--line)}
+.ok .lab{color:var(--brand-ink)} .ok mark{text-decoration-color:var(--brand-ink)}
+.trap header{border-bottom:1.5px solid var(--gold)}
+.trap header .t{font-size:1.2rem}
+.qr{border-top:1.5px solid var(--gold)}
+.warn{border:1.5px solid var(--gold);border-radius:4px}
+.warn b{color:var(--gold)}
+.tip-n{background:var(--navy-2);color:#FBF4EC}
+.prio-b{background:var(--gold-soft);color:var(--ink)}
+.prio-c{background:var(--navy);color:var(--peach)}
+footer .sign{display:flex;align-items:center;gap:10px;margin-bottom:22px;color:var(--ink)}
+footer .sign svg{width:32px;height:32px}
+footer .sign b{font-family:var(--f-display);font-size:1.05rem}
+footer .sign span{display:block;font-size:.7rem;letter-spacing:.2em;font-weight:600;color:var(--muted)}
 </style>
 </head>
 <body>
 
 <header class="hero">
+  <div class="brandbar wrap"><svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="5"><path d="M14 22 H46 L54 30 H106 V106 H14 Z"/><path d="M33 46 V90 H47 A22 22 0 0 0 47 46 Z"/><path d="M61 90 L76 46 L91 90" stroke-linecap="square"/><path d="M66.5 76 H85.5"/></g></svg><div><span class="bn">Dossiê Aprovação</span><span class="bs">POR THAISSA RIBEIRO</span></div></div>
   <div class="wrap">
     <div>
       <div class="eyebrow">Legislação Extravagante · Guarda Municipal de Fortaleza</div>
@@ -357,7 +434,7 @@ footer ul{padding-left:18px;margin:8px 0 0}
 </section>
 
 <section id="pegadinhas">
-  <div class="sec-head"><div><div class="num">05</div><h2>Pegadinhas reais da prova</h2></div><p>O que a lei diz em verde e o que a banca escreveu em vermelho.</p></div>
+  <div class="sec-head"><div><div class="num">05</div><h2>Pegadinhas reais da prova</h2></div><p>O que a lei diz e como a banca trocou na prova.</p></div>
   <div class="traps">
     <article class="trap">
       <header><span class="t">Troca cirúrgica de palavras</span><small>Questão 74 · Estatuto das Guardas, art. 5º</small></header>
@@ -436,6 +513,7 @@ footer ul{padding-left:18px;margin:8px 0 0}
 
 <footer>
   <div class="wrap">
+    <div class="sign"><svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="5"><path d="M14 22 H46 L54 30 H106 V106 H14 Z"/><path d="M33 46 V90 H47 A22 22 0 0 0 47 46 Z"/><path d="M61 90 L76 46 L91 90" stroke-linecap="square"/><path d="M66.5 76 H85.5"/></g></svg><div><b>Dossiê Aprovação</b><span>POR THAISSA RIBEIRO · @thaissapribeiro</span></div></div>
     <b>Fontes</b>
     <ul>
       <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2023-prefeitura-de-fortaleza-ce-guarda-municipal" target="_blank" rel="noopener">QConcursos · Prova GMF 2023 e gabaritos</a></li>
