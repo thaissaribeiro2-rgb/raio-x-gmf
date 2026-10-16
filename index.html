@@ -299,6 +299,13 @@ footer .sign{display:flex;align-items:center;gap:10px;margin-bottom:22px;color:v
 footer .sign svg{width:32px;height:32px}
 footer .sign b{font-family:var(--f-display);font-size:1.05rem}
 footer .sign span{display:block;font-size:.7rem;letter-spacing:.2em;font-weight:600;color:var(--muted)}
+.contact{display:flex;flex-wrap:wrap;gap:12px}
+.cbtn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:.85rem;letter-spacing:.04em;padding:12px 18px;border-radius:4px;border:1.5px solid var(--brand-ink);color:var(--brand-ink)}
+.cbtn svg{width:20px;height:20px;flex:none}
+.cbtn.wa{background:var(--navy-2);border-color:var(--navy-2);color:#FBF4EC}
+.cbtn:hover{filter:brightness(1.08)}
+.cbtn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (max-width:520px){.cbtn{flex:1 1 100%;justify-content:center}}
 </style>
 </head>
 <body>
@@ -514,15 +521,10 @@ footer .sign span{display:block;font-size:.7rem;letter-spacing:.2em;font-weight:
 <footer>
   <div class="wrap">
     <div class="sign"><svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="5"><path d="M14 22 H46 L54 30 H106 V106 H14 Z"/><path d="M33 46 V90 H47 A22 22 0 0 0 47 46 Z"/><path d="M61 90 L76 46 L91 90" stroke-linecap="square"/><path d="M66.5 76 H85.5"/></g></svg><div><b>Dossiê Aprovação</b><span>POR THAISSA RIBEIRO · @thaissapribeiro</span></div></div>
-    <b>Fontes</b>
-    <ul>
-      <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2023-prefeitura-de-fortaleza-ce-guarda-municipal" target="_blank" rel="noopener">QConcursos · Prova GMF 2023 e gabaritos</a></li>
-      <li><a href="https://www.direcaoconcursos.com.br/noticias/concurso-guarda-de-fortaleza-o-que-estudar" target="_blank" rel="noopener">Direção Concursos · Conteúdo do edital</a></li>
-      <li><a href="https://www.fortaleza.ce.gov.br/images/0001/27_03_2023_GMF.pdf" target="_blank" rel="noopener">Edital GMF 2023 · Prefeitura de Fortaleza</a></li>
-      <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2023-prefeitura-de-maracanau-ce-guarda-civil-municipal" target="_blank" rel="noopener">QConcursos · GCM Maracanaú 2023</a></li>
-      <li><a href="https://www.qconcursos.com/questoes-de-concursos/provas/idecan-2024-prefeitura-de-joao-pessoa-pb-guarda-civil-municipal" target="_blank" rel="noopener">QConcursos · GCM João Pessoa 2024</a></li>
-      <li><a href="https://www.novaconcursos.com.br/portal/concursos/concurso-guarda-de-fortaleza-ce/" target="_blank" rel="noopener">Nova Concursos · Próximo concurso GMF</a></li>
-    </ul>
+    <div class="contact">
+      <a class="cbtn" href="https://www.instagram.com/thaissapribeiro/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg><span>@thaissapribeiro</span></a>
+      <a class="cbtn wa" href="https://wa.me/5585985252056?text=Oi%2C%20Thaissa%21%20Tenho%20interesse%20em%20adquirir%20e%20quero%20saber%20mais%20sobre%20seus%20materiais." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.1A8 8 0 1 1 8.3 19z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.2 8.6c.2-.5.6-.5.9-.5h.4c.2 0 .4.1.5.4l.6 1.4c.1.2 0 .5-.1.7l-.5.6c.6 1.2 1.6 2.1 2.8 2.7l.6-.6c.2-.2.5-.2.7-.1l1.4.7c.2.1.3.3.3.5v.4c0 .4-.2.8-.6 1-.6.3-1.4.4-2.6-.1-1.7-.7-3.3-2.3-4-4-.4-1-.3-1.8-.1-2.3z" fill="currentColor"/></svg><span>Falar no WhatsApp</span></a>
+    </div>
   </div>
 </footer>
 
